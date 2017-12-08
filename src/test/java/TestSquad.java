@@ -15,4 +15,16 @@ public class TestSquad {
    assertEquals("Scorpion", mySquad.getName());
  }
 
+ @Test
+public void Hero_instantiatesCorrectly_true() {
+  Hero myHero = new Hero("Mulu", 16, "","");
+  assertEquals(true, myHero instanceof Hero);
+}
+
+@Test
+public void Hero_instantiatesWithName_String() {
+ Hero myHero = new Hero("Mulu", 16, "","");
+ assertEquals("Mulu", myHero.getName());
+}
+
 }

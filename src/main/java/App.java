@@ -23,6 +23,29 @@ public class App {
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
+    get("/squads", (request, response) -> {
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("squads", Squad.all());
+        model.put("template", "templates/squads.vtl");
+        return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
+    get("/squads/new", (request, response) -> {
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("template", "templates/squad-form.vtl");
+        return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
 
-  }
+    post("/squads", (request, response) -> {
+        Map<String, Object> model = new HashMap<String, Object>();
+        String name = request.queryParams("name");
+        int maxSize = Integer.parseInt(request.queryParams("maxsize"));
+        String Desc = request.queryParams("desc");
+        Squad newSquad = new Squad(maxSize, name, Desc);
+        model.put("Message", "Squad Added Successfuly!!");
+        model.put("link", "/squads");
+        model.put("linkto", "All Squads");
+        model.put("template", "templates/success.vtl");
+        return new ModelAndView(model, layout);
+      }, new VelocityTemplateEngine());
+}
 }

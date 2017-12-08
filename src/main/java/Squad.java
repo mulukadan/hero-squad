@@ -5,9 +5,9 @@ public class Squad{
   private int sMaxSize;
   private String sName;
   private String sCause;
-  // private static List<Squad> instances = new Arraylist<Squad>();
   private static List<Squad> instances = new ArrayList<Squad>();
   private int mId;
+  private List<Hero> sHeros;
 
   //Constractor
   public Squad(int Maxsize, String Name, String Cause){
@@ -35,6 +35,15 @@ public class Squad{
   }
   public static void clear(){
     instances.clear();
+  }
+  public void addHero(Hero newHero){
+    sHeros.add(newHero);
+  }
+  public List<Hero> getHeros() {
+   return sHeros;
+ }
+ public static Squad find(int id) {
+   return instances.get(id - 1);
   }
 
 }

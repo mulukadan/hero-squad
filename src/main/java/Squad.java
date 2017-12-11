@@ -16,6 +16,7 @@ public class Squad{
      sCause = Cause;
      instances.add(this);
      mId = instances.size();
+     sHeros = new ArrayList<Hero>();
   }
 
   public int getMaxSize(){

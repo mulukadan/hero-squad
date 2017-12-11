@@ -8,7 +8,7 @@ public class App {
   public static void main(String[] args) {
     staticFileLocation("/public");
     String layout = "templates/layout.vtl";
-//Sting Heroku Port
+//Setting Heroku Port
     ProcessBuilder process = new ProcessBuilder();
      Integer port;
      if (process.environment().get("PORT") != null) {
@@ -54,5 +54,30 @@ public class App {
             model.put("template", "templates/squad.vtl");
             return new ModelAndView(model, layout);
           }, new VelocityTemplateEngine());
+      get("squads/:id/newhero", (request, response) -> {
+           Map<String, Object> model = new HashMap<String, Object>();
+           Squad squad = Squad.find(Integer.parseInt(request.params(":id")));
+           model.put("squad", squad);
+           model.put("template", "templates/squad-hero-form.vtl");
+           return new ModelAndView(model, layout);
+         }, new VelocityTemplateEngine());
+
+     post("/squ", (request, response) -> {
+         Map<String, Object> model = new HashMap<String, Object>();
+         Squad squad = Squad.find(Integer.parseInt(request.queryParams("squadId")));
+         String name = request.queryParams("name");
+         int age = Integer.parseInt(request.queryParams("age"));
+         String powers = request.queryParams("powers");
+         String weakness = request.queryParams("weakness");
+         Hero newHero = new Hero(name, age, powers, weakness);
+         squad.addHero(newHero);
+         model.put("Message", "Hero Added Successfuly!!");
+         model.put("link", "/squads");
+         model.put("linkto", "All Squads");
+         model.put("template", "templates/success.vtl");
+         return new ModelAndView(model, layout);
+       }, new VelocityTemplateEngine());
+
  }
+
 }
